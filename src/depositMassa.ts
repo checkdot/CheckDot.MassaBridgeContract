@@ -11,10 +11,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const TOKEN_CONTRACT_ADDRESS =
-  'AS12jyar7DLYxX9fsr1WsTkhMcZEvLSmHFQ1ucqWv2M1wqh7yv7zB';
 const BRIDGE_CONTRACT_ADDRESS =
-  'AS1e4vvqMy4RvdSF7xgwMhcu2QhtEfBa8L8QtJSL39AHgGwcCtQn';
+  'AS1HbUnCRbCRgtJKLWFf8e5qri2r6exdgzfcJGRDCsQu7VRAbhFx';
 
 const PRIVATE_KEY = process.env.WALLET_SECRET_KEY;
 
@@ -34,25 +32,13 @@ if (!PRIVATE_KEY) {
       account,
     );
 
-    let approveTx = await client.smartContracts().callSmartContract({
-      maxGas: MAX_GAS_CALL,
-      targetAddress: TOKEN_CONTRACT_ADDRESS,
-      functionName: 'approve',
-      parameter: new Args()
-        .addString(BRIDGE_CONTRACT_ADDRESS)
-        .addU64(1000000000n)
-        .serialize(),
-      fee: 0n,
-    });
-
-    console.log(approveTx);
-
     let depositTX = await client.smartContracts().callSmartContract({
       maxGas: MAX_GAS_CALL,
       targetAddress: BRIDGE_CONTRACT_ADDRESS,
       functionName: 'depositMassa',
-      parameter: new Args().addU64(1000000000n).serialize(),
+      parameter: new Args().addU64(1000n).serialize(),
       fee: 0n,
+      coins: 1000n,
     });
 
     console.log(depositTX);

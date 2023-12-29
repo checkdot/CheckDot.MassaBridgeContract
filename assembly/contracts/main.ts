@@ -88,6 +88,7 @@ export function constructor(binaryArgs: StaticArray<u8>): void {
   Storage.set(LOCK_ASK_DURATION_KEY, u64ToBytes(lockAskDuration));
   Storage.set(UNLOCK_ASK_DURATION_KEY, u64ToBytes(unlockAskDuration));
   Storage.set(TRANSFER_INDEX_KEY, u64ToBytes(0));
+  Storage.set(UNLOCK_ASK_TIME_KEY, u64ToBytes(0));
 
   Storage.set(PAUSED_KEY, 'false');
 }
@@ -557,19 +558,19 @@ export function isPaused(): StaticArray<u8> {
 }
 
 export function token(_: StaticArray<u8>): StaticArray<u8> {
-  return stringToBytes(Storage.get(TOKEN_KEY));
+  return new Args().add(Storage.get(TOKEN_KEY)).serialize();
 }
 
 export function owner(_: StaticArray<u8>): StaticArray<u8> {
-  return stringToBytes(Storage.get(OWNER_KEY));
+  return new Args().add(Storage.get(OWNER_KEY)).serialize();
 }
 
 export function program(_: StaticArray<u8>): StaticArray<u8> {
-  return stringToBytes(Storage.get(PROGRAM_KEY));
+  return new Args().add(Storage.get(PROGRAM_KEY)).serialize();
 }
 
 export function chain(_: StaticArray<u8>): StaticArray<u8> {
-  return stringToBytes(Storage.get(CHAIN_KEY));
+  return new Args().add(Storage.get(CHAIN_KEY)).serialize();
 }
 
 export function feesInDollar(_: StaticArray<u8>): StaticArray<u8> {
